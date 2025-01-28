@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
+import Navbar from "@/components/navbar";
 
 export const metadata: Metadata = {
-  title: "TaskList",
+  title: "Boards | TaskList",
   description: "trello clone",
 };
 
@@ -12,8 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <div className=" w-screen h-screen bg-green-400 flex">
+      <Navbar />
+      {children}
+    </div>
   );
 }
