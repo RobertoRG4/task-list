@@ -23,7 +23,7 @@ const DoardsInfo: React.FC<Props> = ({ onClick }) => {
           <div className="w-[30px] h-[30px] flex items-center justify-center rounded text-xl bg-green-400">
             T
           </div>
-          <h2 className="text-gray-500 font-bold">{data[0]?.title}</h2>
+          <h2 className="text-gray-400 font-bold">{data[0]?.title}</h2>
         </div>
       </header>
       <div className="w-full min-h-[300px] p-4 flex flex-wrap gap-4">

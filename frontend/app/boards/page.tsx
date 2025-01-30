@@ -56,7 +56,7 @@ const BoardsPage = () => {
   return (
     <main className="w-[88%] rounded-tl-4xl p-4 bg-[#1d2125]">
       <section className="pt-4">
-        <h1 className="font-bold text-gray-500 p-4 flex items-center gap-4">
+        <h1 className="font-bold text-gray-400 p-4 flex items-center gap-4">
           <MdOutlineWorkOutline />
           YOUR WORKSPACES
         </h1>
