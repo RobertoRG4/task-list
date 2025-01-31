@@ -41,8 +41,16 @@ workspaceRouter.put(
       const boards = workspace.boards[req.params.idBoard - 1];
       if (boards) {
         const task = boards.tasks[req.params.idTask - 1];
-        const { day } = req.body;
-        task.day = day;
+        const { title, status, day } = req.body;
+        if (title) {
+          task.task = title;
+        }
+        if (status !== undefined) {
+          task.complete = status;
+        }
+        if (day) {
+          task.day = day;
+        }
         res.json({ status: "ok" });
       } else {
         res.status(404).json({ error: "not found board" });
@@ -52,7 +60,23 @@ workspaceRouter.put(
     }
   },
 );
-
+workspaceRouter.get(
+  "/:idWorkspaces/boards/:idBoard/tasks/:idTask",
+  (req, res) => {
+    const workspace = data[req.params.idWorkspaces - 1];
+    if (workspace) {
+      const boards = workspace.boards[req.params.idBoard - 1];
+      if (boards) {
+        const task = boards.tasks[req.params.idTask - 1];
+        res.json(task);
+      } else {
+        res.status(404).json({ error: "not found board" });
+      }
+    } else {
+      res.status(404).json({ error: "not found" });
+    }
+  },
+);
 app.use("/api/v1/task-list/workspaces", workspaceRouter);
 
 app.listen(port, () => console.log(`http://localhost:${port}`));
