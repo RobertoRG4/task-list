@@ -32,6 +32,27 @@ workspaceRouter.get("/:idWorkspaces/boards/:idBoard", (req, res) => {
     res.status(404).json({ error: "not found" });
   }
 });
+workspaceRouter.post("/:idWorkspaces/boards/:idBoard/tasks/", (req, res) => {
+  const workspace = data[req.params.idWorkspaces - 1];
+  if (workspace) {
+    const boards = workspace.boards[req.params.idBoard - 1];
+    if (boards) {
+      const task = boards.tasks;
+      const { title, status } = req.body;
+      task.push({
+        id: task.length + 1,
+        task: title,
+        complete: status,
+        day: "",
+      });
+      res.json({ status: "ok" });
+    } else {
+      res.status(404).json({ error: "not found board" });
+    }
+  } else {
+    res.status(404).json({ error: "not found" });
+  }
+});
 
 workspaceRouter.put(
   "/:idWorkspaces/boards/:idBoard/tasks/:idTask",

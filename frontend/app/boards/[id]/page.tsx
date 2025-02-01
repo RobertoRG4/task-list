@@ -8,6 +8,8 @@ import { IoMdAdd } from "react-icons/io";
 import updateDayTask from "@/hooks/useUpdateDayTask";
 import fetchTask from "@/hooks/fetchTask";
 import updateTask from "@/hooks/updateTask";
+import FormTask from "@/components/createFromTask";
+import CreateTask from "@/hooks/createTask";
 
 interface Task {
   id: number;
@@ -41,11 +43,33 @@ const Page: React.FC<PageProps> = ({ params }) => {
   const [taskComplete, setTaskComplete] = useState<boolean>(
     task?.complete || false,
   );
+  const [showAddTask, setShowAddTask] = useState<boolean>(false);
+  const [createTaskTitle, setCreateTaskTitle] = useState<string>("");
+  const [createTaskStatus, setCreateTaskStatus] = useState<string>("");
 
   const descriptionTask = useRef<HTMLDivElement>(null);
 
   const handleToogle = () => {
     setShowDescriptionTask((prev) => !prev);
+  };
+
+  const handleToogleTask = () => {
+    setShowAddTask((prev) => !prev);
+  };
+
+  const handleSubmitTask = async () => {
+    const status = createTaskStatus === "complete" ? true : false;
+    await CreateTask(id, createTaskTitle, status);
+  };
+  const handleChangeInputTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCreateTaskTitle(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleOnChangeSelectTask = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setCreateTaskStatus(e.target.value);
   };
 
   const handleButtonTask = async (
@@ -198,7 +222,12 @@ const Page: React.FC<PageProps> = ({ params }) => {
         </div>
       </div>
       <div className="p-4 flex items-center gap-4 text-gray-400">
-        <button className="cursor-pointer gap-4 bg-slate-600 w-fit p-2 rounded">
+        <button
+          onClick={() => {
+            setShowAddTask(true);
+          }}
+          className="cursor-pointer gap-4 bg-slate-600 w-fit p-2 rounded"
+        >
           <IoMdAdd />
         </button>
         <span>Add task</span>
@@ -269,6 +298,14 @@ const Page: React.FC<PageProps> = ({ params }) => {
                 </form>
               </div>
             </div>
+          )}
+          {showAddTask && (
+            <FormTask
+              onClick={handleToogleTask}
+              onSubmit={handleSubmitTask}
+              onChangeInput={handleChangeInputTitle}
+              onChangeSelect={handleOnChangeSelectTask}
+            />
           )}
         </div>
       </div>
